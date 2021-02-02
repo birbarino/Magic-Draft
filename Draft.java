@@ -10,8 +10,9 @@ public class Draft {
     static Player p5 = new Player();
     static Player p6 = new Player();
     static Player p7 = new Player();
+    private static boolean onPlay;
 
-    public int rollDie(Player p) { // rolls D-12 to determine first player
+    public int rollDie(Player p) { // rolls D-12 to determine first playerk
         int roll = (int) (Math.random() * 10);
         if (roll <= 12 && roll >= 1) {
             return roll;
@@ -22,7 +23,18 @@ public class Draft {
             return 0;
     }
 
-    public static void main(String[] args) { //this will be where the draft is created and done. Drafts 3 times, once per pack
+    // Getter
+    public static boolean isOnPlay() {
+        return onPlay;
+    }
+
+    // Setter
+    public static void setOnPlay(boolean onPlay) {
+        Draft.onPlay = onPlay;
+    }
+
+    public static void main(String[] args) { // this will be where the draft is created and done. Drafts 3 times, once
+                                             // per pack
 
         Draft pod = new Draft();
         p0.name = "Bill";
@@ -36,9 +48,9 @@ public class Draft {
         p1.dieRoll = roll1;
 
         System.out.println("Roll!\n");
-        System.out.println(p0.name + ": " + roll0);
+        System.out.println(p0.name + " rolled a " + roll0);
 
-        System.out.println(p1.name + ": " + roll1);
+        System.out.println(p1.name + " rolled a " + roll1);
 
         while (roll0 == roll1) { // while both rolls are equal, reroll until not equal.
             p0.dieRoll = roll0;
@@ -49,10 +61,17 @@ public class Draft {
         if (roll0 > roll1) {
             System.out.println(p0.name + " wins the high roll.");
             p0.wonDieRoll = true;
+            setOnPlay(p0.playFirst(p0.wonDieRoll));
+            p0.onThePlay = Draft.isOnPlay(); // sets onThePlay bool to result for player
         } else {
             System.out.println(p1.name + " wins the high roll.");
             p1.wonDieRoll = true;
+            setOnPlay(p1.playFirst(p1.wonDieRoll));
+            p1.onThePlay = Draft.isOnPlay(); // sets onThePlay bool to result for player
         }
+
+        System.out.println(p0.onThePlay);
+        System.out.println(p1.onThePlay);
 
         // System.out.println((p0.wonDieRoll) && (p1.wonDieRoll));
         // Why is this even here?
@@ -62,3 +81,11 @@ public class Draft {
 
     }
 }
+
+/*
+ * Draft pod outline: - Instantiate players and 3 packs for each player. - Put a
+ * pack in each player's hand at same time. - Have each player denote value for
+ * each card in pack. Create an algorithm that defines how bomby a card is. - -
+ * 
+ * 
+ */
