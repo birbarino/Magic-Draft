@@ -1,6 +1,7 @@
 package Magic.Game;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Draft {
     public ArrayList<Player> tableMaker(int numPlayers) {
@@ -27,20 +28,79 @@ public class Draft {
             System.out.println("Please gather 6 or 8 players");
         }
 
-        System.out.println("Created table of " + numPlayers + " players.");
+        System.out.println("Created table of " + numPlayers + " player(s).");
         return table;
     }
 
-    public static void main(String[] args) { // this will be where the draft is created and done. Drafts 3 times, once
-                                             // per pack
-
-        // System.out.println((p0.wonDieRoll) && (p1.wonDieRoll));
-        // Why is this even here?
+    public ArrayList<Library> setGrabber(String set) {
+        ArrayList<Library> lib = new ArrayList<>();
+        return lib;
     }
 
-    public static void duel(Player[] args) { // what does this do? I have no clue
+    public static void main(String[] args) {
+        // this will be where the draft is created and done. Drafts 3 times, once
+        // per pack
+        Scanner scan = new Scanner(System.in);
+        Draft table = new Draft();
+        int numPlayers = 0;
+        boolean b = true;
+        String chosenSet = "";
+        String[] possibleSets = { "DOM", "M12", "BFZ", };
 
+        // surround in try-catch
+        try {
+            do {
+                System.out.println("Are there 6 or 8 players drafting today?");
+                numPlayers = scan.nextInt();
+                switch (numPlayers) {
+                    case 8:
+                        b = false;
+                        break;
+
+                    case 6:
+                        b = false;
+                        break;
+
+                    default:
+                        numPlayers = 8;
+                        System.out.println("8 players chosen by default");
+                        break;
+                }
+
+            } while (b);
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong.");
+        }
+
+        table.tableMaker(numPlayers);
+        System.out.println("What set would you like to draft today?");
+        for (String set : possibleSets) {
+            System.out.print(set + ", ");
+        }
+        System.out.println();
+
+        //TODO: Fix this checker
+        b = true;
+        while (b) {
+            String str = "";
+            for (int i = 0; i < possibleSets.length; i++) {
+                str = scan.nextLine();
+                if (possibleSets[i].contains(str.toUpperCase())) {
+                    chosenSet = str;
+                    System.out.println("Prepare to draft " + chosenSet + "!");
+                    b = false;
+                }
+            }
+            if (chosenSet != str) {
+                System.out.println("Please choose from a set listed above.");
+            }
+        }
+
+        // always close those scanners
+        scan.close();
     }
+
 }
 
 /*
