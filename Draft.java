@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Draft {
+    //I'm sure that there is a sweet way to validate input.
     public ArrayList<Player> tableMaker(int numPlayers) {
         ArrayList<Player> table = new ArrayList<Player>();
         if (numPlayers == 8) { // 8 player draft
@@ -32,6 +33,11 @@ public class Draft {
         return table;
     }
 
+    //unassign pack from one player to another's "pack pickup zone".
+    public void passPack(Player p, Player r, Library x, Library y){
+        return;
+    }
+
     public ArrayList<Library> setGrabber(String set) {
         ArrayList<Library> lib = new ArrayList<>();
         return lib;
@@ -43,11 +49,11 @@ public class Draft {
         Scanner scan = new Scanner(System.in);
         Draft table = new Draft();
         int numPlayers = 0;
+        int numPack = 1;
         boolean b = true;
         String chosenSet = "";
         String[] possibleSets = { "DOM", "M12", "BFZ", };
 
-        // surround in try-catch
         try {
             do {
                 System.out.println("Are there 6 or 8 players drafting today?");
@@ -80,20 +86,23 @@ public class Draft {
         }
         System.out.println();
 
-        //TODO: Fix this checker
+        //TODO: Fix this set checker
         b = true;
         while (b) {
             String str = "";
             for (int i = 0; i < possibleSets.length; i++) {
                 str = scan.nextLine();
-                if (possibleSets[i].contains(str.toUpperCase())) {
+                if (possibleSets[i].equalsIgnoreCase(str)) {
                     chosenSet = str;
                     System.out.println("Prepare to draft " + chosenSet + "!");
-                    b = false;
+                    b = false; //escapes the loop, can probably use break instead
                 }
             }
             if (chosenSet != str) {
                 System.out.println("Please choose from a set listed above.");
+            } else{
+                System.out.println("Executing else block for chosenSet != str");
+                b = false; //escapes loop
             }
         }
 
