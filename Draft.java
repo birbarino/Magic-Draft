@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Draft {
-    //I'm sure that there is a sweet way to validate input.
+    // I'm sure that there is a sweet way to validate input.
     public ArrayList<Player> tableMaker(int numPlayers) {
         ArrayList<Player> table = new ArrayList<Player>();
         if (numPlayers == 8) { // 8 player draft
@@ -33,26 +33,34 @@ public class Draft {
         return table;
     }
 
-    //unassign pack from one player to another's "pack pickup zone".
-    public void passPack(Player p, Player r, Library x, Library y){
+    // unassign pack from one player to another's "pack pickup zone".
+    public void passPack(Player p, Player r, Library x, Library y) {
         return;
     }
 
-    public ArrayList<Library> setGrabber(String set) {
-        ArrayList<Library> lib = new ArrayList<>();
+    public ArrayList<Card> getExpansion(String chosenSet, String[] availableSets) {
+        ArrayList<Card> lib = new ArrayList<>();
+        if (chosenSet instanceof String) {
+            System.out.println("Prepare to draft " + chosenSet + "!");
+        } else {
+            System.out.println("Please input a string matching your desired set.");
+        }
+        Card testCard = new Card();
+        lib.add(testCard);
         return lib;
     }
 
     public static void main(String[] args) {
-        // this will be where the draft is created and done. Drafts 3 times, once
-        // per pack
+        // this will be where the draft is created and done. Drafts total of 3 times
+        // (once per pack)
         Scanner scan = new Scanner(System.in);
         Draft table = new Draft();
         int numPlayers = 0;
         int numPack = 1;
         boolean b = true;
         String chosenSet = "";
-        String[] possibleSets = { "DOM", "M12", "BFZ", };
+        String[] availableSets = { "DOM", "M12", "BFZ", };
+        ArrayList<Card> draftedExpansion = new ArrayList<>();
 
         try {
             do {
@@ -81,32 +89,43 @@ public class Draft {
 
         table.tableMaker(numPlayers);
         System.out.println("What set would you like to draft today?");
-        for (String set : possibleSets) {
+        for (String set : availableSets) {
             System.out.print(set + ", ");
         }
         System.out.println();
 
-        //TODO: Fix this set checker
-        b = true;
-        while (b) {
-            String str = "";
-            for (int i = 0; i < possibleSets.length; i++) {
-                str = scan.nextLine();
-                if (possibleSets[i].equalsIgnoreCase(str)) {
-                    chosenSet = str;
-                    System.out.println("Prepare to draft " + chosenSet + "!");
-                    b = false; //escapes the loop, can probably use break instead
+        // can probably be a do-while
+        
+        while (draftedExpansion.isEmpty()) { // while the draftedExpansion arraylist is empty, try to fill it using a set given via Scanner input
+            //System.out.println("Current emptiness state of draftedExpansion: " + draftedExpansion.isEmpty());
+            try {
+                chosenSet = scan.next();
+                for (int i = 0; i <= availableSets.length - 1; i++) { // check to see if set chosen is in array
+                    while (!(chosenSet.length() == 3)) {
+                        System.out.println("Please input the three character set ID for the set you want to draft");
+                        chosenSet = scan.next();
+                    }
+
+                    if (availableSets[i].equals(chosenSet.toUpperCase())) {
+                        draftedExpansion = table.getExpansion(chosenSet, availableSets);
+                        break;
+                    }
+
                 }
-            }
-            if (chosenSet != str) {
-                System.out.println("Please choose from a set listed above.");
-            } else{
-                System.out.println("Executing else block for chosenSet != str");
-                b = false; //escapes loop
+
+            } catch (Exception e) {
+                if (chosenSet.isEmpty()) {
+                    System.out.println("Please define a desired set.");
+                } else if (availableSets.length == 0) {
+                    System.out.println("There are no sets to choose from.");
+                } else {
+                    System.out.println("Something went horribly wrong.");
+                }
             }
         }
 
         // always close those scanners
+        System.out.println("Closing scanner.");
         scan.close();
     }
 

@@ -30,10 +30,10 @@ public class Player {
     public int dieRoll, lifeTotal, wins, losses;
     public Library packPickupZone, revealedCards;
     public Player leftPlayer, rightPlayer;
-    Library hand; // get hand.length to get number of cards in hand. Useful
+    Library hand = new Library(); // get hand.length to get number of cards in hand. Useful
                                                              // for determining pick order based on how many cards player
                                                              // is looking at
-    Library deck = new Library();
+    Library deck = new Library();   // does this do anything or will it create complexity/conflictions?
     Pack draftPacks;
 
     public boolean playFirst(boolean wonRoll) {
@@ -44,8 +44,13 @@ public class Player {
     public Player createPlayer(String name) {
         Player p = new Player();
         p.name = name;
-        // p.deck = deck;
+        // p.deck = deck;   // deck variable is no longer an arg for this method. Player is created, then assigned a deck before a "Game."
         p.lifeTotal = 20;
         return p;
+    }
+
+    public Library pickupPack(Library pack, Player p){
+
+        return 
     }
 }
