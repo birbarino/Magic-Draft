@@ -51,6 +51,6 @@ public class Player {
 
     public Library pickupPack(Library pack, Player p){
 
-        return 
+        return pack; 
     }
 }
