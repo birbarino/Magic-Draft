@@ -1,6 +1,8 @@
 package Magic.Game;
 
-public class Card {
+import java.util.ArrayList;
+
+public class Card implements Library {
 
     // TODO: Parse json for stuff below. Likely already a program for this but hey
     // it'll be fun doing it for yourself.
@@ -23,6 +25,12 @@ public class Card {
     public int cmc, cardVal; // cardVal var denotes the "bomby-ness" of it. Scale will be based on
                              // ChannelFireball draft guides
                              // set pick orders.
+
+    public ArrayList<Card> createPack(ArrayList<Card> set) { // pass in set, which is then fetched, parsed, and stored.
+        ArrayList<Card> pack = new ArrayList<Card>();
+
+        return pack; // returns a single coalated pack.
+    }
 
 }
 

@@ -1,12 +1,10 @@
 package Magic.Game;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
-public class Library {    // does this just need to be blank, not an arrlist, or does card.java need to be in this?
+public interface Library { 
 
-    ArrayList<Card> deck = new ArrayList<Card>();
-    ArrayList<Card> sideboard = new ArrayList<Card>(); 
-    ArrayList<Card> drafPool = new ArrayList<Card>();
+    //ArrayList<Card> deck = new ArrayList<Card>();
 
     // public static void main(String[] args) {
     // Card[] deck = new Card[]{"Lightning Bolt"};
